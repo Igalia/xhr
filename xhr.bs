@@ -412,7 +412,7 @@ the <a>use-CORS-preflight flag</a> to be set.)
   case-insensitive match for `<code>CONNECT</code>`, `<code>TRACE</code>`, or `<code>TRACK</code>`.
 
   <p>Throws an "{{InvalidAccessError!!exception}}" {{DOMException}} if <var>async</var> is false,
-  the <a>current global object</a> is a {{Window}} object, and the
+  the <a>current principal global object</a> is a {{Window}} object, and the
   {{XMLHttpRequest/timeout!!attribute}} attribute is not zero or the {{XMLHttpRequest/responseType}}
   attribute is not the empty string.
 </dl>
@@ -420,9 +420,10 @@ the <a>use-CORS-preflight flag</a> to be set.)
 <p class=critical id=sync-warning>Synchronous {{XMLHttpRequest}} outside of workers is in the
 process of being removed from the web platform as it has detrimental effects to the end user's
 experience. (This is a long process that takes many years.) Developers must not pass false for the
-<var>async</var> argument when the <a>current global object</a> is a {{Window}} object. User agents
-are strongly encouraged to warn about such usage in developer tools and may experiment with
-<a lt=throw>throwing</a> an "{{InvalidAccessError!!exception}}" {{DOMException}} when it occurs.
+<var>async</var> argument when the <a>current principal global object</a> is a {{Window}} object.
+User agents are strongly encouraged to warn about such usage in developer tools and may experiment
+with <a lt=throw>throwing</a> an "{{InvalidAccessError!!exception}}" {{DOMException}} when it
+occurs.
 
 <p>The
 <dfn id=dom-xmlhttprequest-open method for=XMLHttpRequest><code>open(<var>method</var>, <var>url</var>)</code></dfn>
@@ -472,9 +473,9 @@ method steps are:
    <var>password</var>.
   </ol>
 
- <li><p>If <var>async</var> is false, the <a>current global object</a> is a {{Window}} object, and
- either <a>this</a>'s <a>timeout</a> is not 0 or <a>this</a>'s <a>response type</a> is not
- the empty string, then <a>throw</a> an "{{InvalidAccessError!!exception}}" {{DOMException}}.
+ <li><p>If <var>async</var> is false, the <a>current principal global object</a> is a {{Window}}
+ object, and either <a>this</a>'s <a>timeout</a> is not 0 or <a>this</a>'s <a>response type</a> is
+ not the empty string, then <a>throw</a> an "{{InvalidAccessError!!exception}}" {{DOMException}}.
 
  <li>
   <p><a for="fetch controller">Terminate</a> <a>this</a>'s
@@ -586,7 +587,8 @@ client.send();
   <a><code>send()</code></a> method).
 
   <p>When set: throws an "{{InvalidAccessError!!exception}}" {{DOMException}} if the
-  <a>synchronous flag</a> is set and the <a>current global object</a> is a {{Window}} object.
+  <a>synchronous flag</a> is set and the <a>current principal global object</a> is a {{Window}}
+  object.
 </dl>
 
 <p>The <dfn attribute for=XMLHttpRequest><code>timeout</code></dfn> getter steps are to return
@@ -595,7 +597,7 @@ client.send();
 <p>The {{XMLHttpRequest/timeout!!attribute}} setter steps are:
 
 <ol>
- <li><p>If the <a>current global object</a> is a {{Window}} object and <a>this</a>'s
+ <li><p>If the <a>current principal global object</a> is a {{Window}} object and <a>this</a>'s
  <a>synchronous flag</a> is set, then <a>throw</a> an "{{InvalidAccessError!!exception}}"
  {{DOMException}}.
 
@@ -975,7 +977,7 @@ return <a>this</a>'s <a>cross-origin credentials</a>.
    <a for="fetch controller">terminate</a> <a>this</a>'s <a for=XMLHttpRequest>fetch controller</a>.
 
    <li><p><a for="fetch controller">Report timing</a> for <a>this</a>'s
-   <a for=XMLHttpRequest>fetch controller</a> given the <a>current global object</a>.
+   <a for=XMLHttpRequest>fetch controller</a> given the <a>current principal global object</a>.
 
    <li><p>Run <a>handle response end-of-body</a> for <a>this</a>.
   </ol>
@@ -1408,14 +1410,15 @@ steps are:
   "<code>json</code>", and
   "<code>text</code>".
 
-  <p>When set: setting to "<code>document</code>" is ignored if the <a>current global object</a> is
-  not a {{Window}} object.
+  <p>When set: setting to "<code>document</code>" is ignored if the <a>current principal global
+  object</a> is not a {{Window}} object.
 
   <p>When set: throws an "{{InvalidStateError!!exception}}" {{DOMException}} if <a>state</a> is
   <i>loading</i> or <i>done</i>.
 
   <p>When set: throws an "{{InvalidAccessError!!exception}}" {{DOMException}} if the
-  <a>synchronous flag</a> is set and the <a>current global object</a> is a {{Window}} object.
+  <a>synchronous flag</a> is set and the <a>current principal global object</a> is a {{Window}}
+  object.
 </dl>
 
 <p>The <dfn attribute for=XMLHttpRequest><code>responseType</code></dfn> getter steps are to return
@@ -1424,13 +1427,13 @@ steps are:
 <p>The {{XMLHttpRequest/responseType}} setter steps are:
 
 <ol>
- <li><p>If the <a>current global object</a> is not a {{Window}} object and the given value is
- "<code>document</code>", then return.
+ <li><p>If the <a>current principal global object</a> is not a {{Window}} object and the given value
+ is "<code>document</code>", then return.
 
  <li><p>If <a>this</a>'s <a>state</a> is <i>loading</i> or <i>done</i>, then <a>throw</a> an
  "{{InvalidStateError!!exception}}" {{DOMException}}.
 
- <li><p>If the <a>current global object</a> is a {{Window}} object and <a>this</a>'s
+ <li><p>If the <a>current principal global object</a> is a {{Window}} object and <a>this</a>'s
  <a>synchronous flag</a> is set, then <a>throw</a> an "{{InvalidAccessError!!exception}}"
  {{DOMException}}.
 
